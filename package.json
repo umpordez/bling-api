@@ -1,0 +1,38 @@
+{
+    "name": "bling-api",
+    "version": "0.0.1",
+    "description": "Implementação da API 3.0 do Bling!",
+    "main": "bling-api.js",
+    "keywords": [
+        "bling",
+        "bing erp",
+        "bling api",
+        "bling erp api",
+        "bling.com.br",
+        "bling br"
+    ],
+    "author": "Deividy Metheler Zachetti <deividyz@gmail.com>",
+    "license": "MIT",
+    "scripts": {
+        "test": "./node_modules/mocha/bin/mocha.js tests/**/*/*.test.js --no-timeout",
+        "lint": "DEBUG=eslint:cli-engine ./node_modules/eslint/bin/eslint.js tests/ core/ clients/"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/umpordez/bling-api.git"
+    },
+    "bugs": {
+        "url": "https://github.com/umpordez/bling-api/issues"
+    },
+    "homepage": "https://github.com/umpordez/bling-api",
+    "dependencies": {
+        "argument-validator": "^0.1.0",
+        "axios": "^0.27.2",
+        "date-fns": "^2.28.0"
+    },
+    "devDependencies": {
+        "dotenv": "^16.0.0",
+        "eslint": "^8.25.0",
+        "mocha": "^10.0.0"
+    }
+}

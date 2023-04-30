@@ -1,0 +1,15 @@
+.DS_STORE
+logs
+.sass-cache
+node_modules
+.env
+
+.vscode
+var
+
+ui/web/build
+*.pid
+cache
+
+tags
+*.log
