@@ -30,16 +30,19 @@ class BlingBaseClient {
         this.lastResponses = [];
     }
 
-    async update(id, data = {}) {
+    update(id, data = {}) {
         return this.doRequest('PUT', `${this.endpoint}/${id}`, data);
     }
 
-    async create(data = {}) {
+    create(data = {}) {
         return this.doRequest('POST', this.endpoint, data);
     }
+
     delete(id) {
         return this.doRequest('DELETE', `${this.endpoint}/${id}`);
     }
+
+    get(id, opts = {}) { return this.getById(id, opts); }
 
     getAll(opts = {}) {
         return this.getAllPaginating(this.endpoint, { ...opts });
