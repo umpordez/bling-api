@@ -8,7 +8,6 @@ async function sleep(ms) {
     });
 }
 
-
 const configByEnv = {
     prod: {
         baseUrl: 'https://www.bling.com.br/Api/v3'
@@ -31,13 +30,24 @@ class BlingBaseClient {
         this.lastResponses = [];
     }
 
+    async update(id, data = {}) {
+        return this.doRequest('PUT', `${this.endpoint}/${id}`, data);
+    }
+
+    async create(data = {}) {
+        return this.doRequest('POST', this.endpoint, data);
+    }
+    delete(id) {
+        return this.doRequest('DELETE', `${this.endpoint}/${id}`);
+    }
+
     getAll(opts = {}) {
         return this.getAllPaginating(this.endpoint, { ...opts });
     }
 
     getById(id, opts = {}) {
         V.number(id, 'id');
-        return this.doGetRequest(id, { ...opts });
+        return this.doGetRequest(`${this.endpoint}/${id}`, { ...opts });
     }
 
     async * getAllPaginating(url, params = {}) {
@@ -70,13 +80,6 @@ class BlingBaseClient {
             'Accept': 'application/json',
             'X-API-KEY': this.apiToken
         };
-
-        for (const key in body) {
-            const value = body[key];
-            if (!V.isArray(value)) { continue; }
-
-            body[key] = value.join(';');
-        }
 
         url = `${this.baseUrl}/${url}`;
         body.limit = 100;
@@ -123,11 +126,20 @@ class BlingBaseClient {
                 const error = response.data && response.data.error;
 
                 if (error) {
-                    const { message, description, type } = error;
+                    const { fields, message, description, type } = error;
                     errorObject.message = `${type} - ${message}`;
 
                     errorObject.description = description;
                     errorObject.type = type;
+                    errorObject.fields = fields;
+
+                    if (fields && fields.length) {
+                        errorObject.message += `\nFields: ${fields.map((f) =>
+                            `Code: ${f.code}, ` +
+                            `Namespace: ${f.namespace}, ` +
+                            `Element: ${f.element}, ` +
+                            `Msg: ${f.msg}`).join('\n')}`;
+                    }
 
                     throw errorObject;
                 }
