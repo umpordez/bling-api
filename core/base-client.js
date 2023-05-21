@@ -57,12 +57,12 @@ class BlingBaseClient {
         let page = 1;
         let data;
 
-        params.limit = params.limit || 100;
+        params.limite = params.limit || 100;
 
         do {
             data = await this.doRequest('GET', url, {
                 ...params,
-                page
+                pagina: page
             });
 
             yield data;
@@ -85,7 +85,7 @@ class BlingBaseClient {
         };
 
         url = `${this.baseUrl}/${url}`;
-        body.limit = 100;
+        body.limite = 100;
 
         if (method === 'GET') {
             url += `?${querystring.encode(body)}`;
