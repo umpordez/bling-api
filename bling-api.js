@@ -1,6 +1,15 @@
 const V = require('argument-validator');
 
 const SituacoesClient = require('./clients/situacoes');
+const BorderosClient = require('./clients/borderos');
+const CamposCustomizadosClient = require('./clients/campos-customizados');
+const CategoriasLojaClient = require('./clients/categorias-loja');
+const CategoriasClient = require('./clients/categorias');
+const ContatosClient = require('./clients/contatos');
+const CteClient = require('./clients/cte');
+const EstoquesClient = require('./clients/estoques');
+const PedidosVendasClient = require('./clients/pedidos-vendas');
+const ProdutosClient = require('./clients/produtos');
 
 class BlingApi {
     constructor(token) {
@@ -11,6 +20,15 @@ class BlingApi {
         this.lastResponses = [];
 
         this.situacoes = this.initClient(SituacoesClient);
+        this.borderos = this.initClient(BorderosClient);
+        this.camposCustomizados = this.initClient(CamposCustomizadosClient);
+        this.categoriasLoja = this.initClient(CategoriasLojaClient);
+        this.categorias = this.initClient(CategoriasClient);
+        this.contatos = this.initClient(ContatosClient);
+        this.cte = this.initClient(CteClient);
+        this.estoques = this.initClient(EstoquesClient);
+        this.pedidosVendas = this.initClient(PedidosVendasClient);
+        this.produtos = this.initClient(ProdutosClient);
     }
 
     initClient(Client) {
