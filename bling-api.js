@@ -1,6 +1,5 @@
 const V = require('argument-validator');
 
-const SituacoesClient = require('./clients/situacoes');
 const BorderosClient = require('./clients/borderos');
 const CamposCustomizadosClient = require('./clients/campos-customizados');
 const CategoriasLojaClient = require('./clients/categorias-loja');
@@ -19,7 +18,6 @@ class BlingApi {
         this.lastRequests = [];
         this.lastResponses = [];
 
-        this.situacoes = this.initClient(SituacoesClient);
         this.borderos = this.initClient(BorderosClient);
         this.camposCustomizados = this.initClient(CamposCustomizadosClient);
         this.categoriasLoja = this.initClient(CategoriasLojaClient);
