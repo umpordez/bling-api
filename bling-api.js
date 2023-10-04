@@ -19,12 +19,12 @@ const FormasPagamentosClient = require('./clients/formas-pagamentos');
 const HomologacaoClient = require('./clients/homologacao');
 const LogisticasClient = require('./clients/logisticas');
 const LogisticasObjetosClient = require('./clients/logisticas-objetos');
-const NaturezaOperacoesClient require('./clients/natureza-operacoes');
-const NfceClient require('./clients/nfce');
-const NfeClient require('./clients/nfe');
-const NfseClient require('./clients/nfse');
+const NaturezaOperacoesClient = require('./clients/natureza-operacoes');
+const NfceClient = require('./clients/nfce');
+const NfeClient = require('./clients/nfe');
+const NfseClient = require('./clients/nfse');
 const NotificacoesClient = require('./clients/notificacoes');
-const PedidosComprasClient = require('./clients/pedidos-compras')
+const PedidosComprasClient = require('./clients/pedidos-compras');
 const PedidosVendasClient = require('./clients/pedidos-vendas');
 const ProdutosClient = require('./clients/produtos');
 const ProdutosEstruturasClient = require('./clients/produtos-estruturas');
@@ -47,7 +47,7 @@ class BlingApi {
 
         this.borderos = this.initClient(BorderosClient);
         this.camposCustomizados = this.initClient(CamposCustomizadosClient);
-        this.categoriasLoja = this.initClient(CategoriasLojaClient);
+        this.categoriasLoja = this.initClient(CategoriasLojasClient);
         this.categoriasProdutos = this.initClient(CategoriasProdutosClient);
         this.categoriasReceitasDespesas = this.initClient(CategoriasReceitasDespesasClient);
         this.contasContabeis = this.initClient(ContasContabeisClient);

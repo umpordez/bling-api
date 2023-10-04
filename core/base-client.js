@@ -152,10 +152,6 @@ class BlingBaseClient {
             throw errorObject;
         }
 
-        if (!response || !response.data) {
-            throw new Error(`Received an invalid response from bling.`);
-        }
-
         if (response.error) {
             const { message, description, type } = response.error;
             const err = new Error(`${type} - ${message}`);
