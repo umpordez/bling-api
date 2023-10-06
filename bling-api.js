@@ -64,7 +64,7 @@ class BlingApi {
         this.homologacao = this.initClient(HomologacaoClient);
         this.logisticas = this.initClient(LogisticasClient);
         this.logisticasObjetos = this.initClient(LogisticasObjetosClient);
-        this.naturezaOperacoes = this.initClient(NaturezaOperacoesClient);
+        this.naturezaOperacoes = this.initClient(NaturezasOperacoesClient);
         this.nfce = this.initClient(NfceClient);
         this.nfe = this.initClient(NfeClient);
         this.nfse = this.initClient(NfseClient);

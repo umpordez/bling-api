@@ -136,7 +136,7 @@ class BlingBaseClient {
                     errorObject.type = type;
                     errorObject.fields = fields;
 
-                    if (fields && fields.length) {
+                    if (fields && fields.length && !fields[0].length) {
                         errorObject.message += `\nFields: ${fields.map((f) =>
                             `Code: ${f.code}, ` +
                             `Namespace: ${f.namespace}, ` +
@@ -144,6 +144,17 @@ class BlingBaseClient {
                             `Msg: ${f.msg}`).join('\n')}`;
                     }
 
+                    if (fields && fields.length && fields[0].length) {
+                        for (const moreFields of fields) {
+                            errorObject.message += `\nFields: ${moreFields.map((f) =>
+                                `Code: ${f.code}, ` +
+                                `Namespace: ${f.namespace}, ` +
+                                `Element: ${f.element}, ` +
+                                `Msg: ${f.msg}`).join('\n')}`;
+                        }
+                    }
+
+                    console.log(errorObject.message);
                     throw errorObject;
                 }
             }
