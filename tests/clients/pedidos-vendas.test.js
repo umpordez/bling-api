@@ -11,6 +11,14 @@ const customer = {
     cellphone: faker.phone.number().replace(/\D/g, '')
 };
 
+const product = {
+    nome: `Test #${new Date().getTime()}`,
+    codigo: `code_${new Date().getTime()}`,
+    tipo: 'P',
+    formato: 'S'
+}
+
+
 describe('Bling! API Pedidos-Vendas Client', () => {
     const { API_TOKEN } = process.env;
     const client = new BlingApi(API_TOKEN);
@@ -22,12 +30,7 @@ describe('Bling! API Pedidos-Vendas Client', () => {
     after(async () => { });
 
     before(async () => {
-        const produto = await client.produtos.create({
-            nome: `Test #${new Date().getTime()}`,
-            codigo: `code_${new Date().getTime()}`,
-            tipo: 'P',
-            formato: 'S'
-        });
+        const produto = await client.produtos.create(product);
 
         const contato = await client.contatos.create({
             nome: `Test #${new Date().getTime()}`,
@@ -46,6 +49,7 @@ describe('Bling! API Pedidos-Vendas Client', () => {
 
     it('create', async () => {
         const contato = createdContatos[0];
+        const produto = createdProdutos[0];
 
         const body = {
             "contato": {
@@ -56,9 +60,9 @@ describe('Bling! API Pedidos-Vendas Client', () => {
             "itens": [
                 {
                     "produto": {
-                        "codigo": "code_1698161902303",
-                        "descricao": "Test #1698161902303",
-                        "id": 16153298832,
+                        "codigo": product.codigo,
+                        "descricao": product.nome,
+                        "id": produto.id,
                         "pesoBruto": 0,
                         "precoLista": 0
                     },
@@ -96,6 +100,7 @@ describe('Bling! API Pedidos-Vendas Client', () => {
 
     it('update', async () => {
         const contato = createdContatos[0];
+        const produto = createdProdutos[0];
 
         const res = await client.pedidosVendas.update(
             createdPedidos[0].id, {
@@ -107,9 +112,9 @@ describe('Bling! API Pedidos-Vendas Client', () => {
                 "itens": [
                     {
                         "produto": {
-                            "codigo": "code_1698161902303",
-                            "descricao": "Test #1698161902303",
-                            "id": 16153298832,
+                            "codigo": product.codigo,
+                            "descricao": product.nome,
+                            "id": produto.id,
                             "pesoBruto": 0,
                             "precoLista": 0
                         },
