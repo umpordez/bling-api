@@ -19,10 +19,11 @@ describe('Bling! API Contatos Client', () => {
         assert(client);
     });
 
-    it('create', async () => {
+    it.only('create', async () => {
         const client = new ContatosClient(API_TOKEN);
         const res = await client.create({
-            nome: `Test #${new Date().getTime()}`
+            nome: `Test #${new Date().getTime()}`,
+            tipo: 'F'
         });
 
         createdContatos.push(res);
