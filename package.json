@@ -1,6 +1,6 @@
 {
     "name": "bling-api",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "Implementação da API 3.0 do Bling!",
     "main": "bling-api.js",
     "keywords": [
