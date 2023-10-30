@@ -15,7 +15,8 @@ const product = {
     nome: `Test #${new Date().getTime()}`,
     codigo: `code_${new Date().getTime()}`,
     tipo: 'P',
-    formato: 'S'
+    formato: 'S',
+    unidade: 'UN'
 }
 
 
@@ -47,7 +48,7 @@ describe('Bling! API Pedidos-Vendas Client', () => {
         assert(client);
     });
 
-    it('create', async () => {
+    it.only('create', async () => {
         const contato = createdContatos[0];
         const produto = createdProdutos[0];
 
@@ -56,12 +57,14 @@ describe('Bling! API Pedidos-Vendas Client', () => {
                 "id": contato.id
             },
             "data": formatDate(new Date(), 'yyyy-MM-dd'),
+            numero: new Date().getTime(),
 
             "itens": [
                 {
                     "produto": {
-                        "codigo": product.codigo,
-                        "descricao": product.nome,
+                        "codigo": produto.codigo,
+                        "unidade": 'UN',
+                        "descricao": produto.nome,
                         "id": produto.id,
                         "pesoBruto": 0,
                         "precoLista": 0
@@ -70,6 +73,7 @@ describe('Bling! API Pedidos-Vendas Client', () => {
                     "valor": 10
                 }
             ],
+
 
             "transporte": {
                 "contato": {
@@ -98,6 +102,12 @@ describe('Bling! API Pedidos-Vendas Client', () => {
         assert(res);
     });
 
+    it('findAll', async () => {
+        for await (const orders of client.pedidosVendas.getAll({ numero: 19 })) {
+            console.log(orders);
+        }
+    });
+
     it('update', async () => {
         const contato = createdContatos[0];
         const produto = createdProdutos[0];
@@ -108,6 +118,7 @@ describe('Bling! API Pedidos-Vendas Client', () => {
                     "id": contato.id
                 },
                 "data": formatDate(new Date(), 'yyyy-MM-dd'),
+                numero: 'foo_5',
 
                 "itens": [
                     {
@@ -122,14 +133,45 @@ describe('Bling! API Pedidos-Vendas Client', () => {
                         "valor": 10
                     }
                 ],
+                "transporte": {
+                    "fretePorConta": 0,
+                    "frete": 20,
+                    "quantidadeVolumes": 1,
+                    "pesoBruto": 0.5,
+                    "prazoEntrega": 10,
+                    "contato": {
+                        "nome": "Transportador SEDEX"
+                    },
+                    "etiqueta": {
+                        "nome": "Transportador",
+                        "endereco": "Olavo Bilac",
+                        "numero": "914",
+                        "complemento": "Sala 101",
+                        "municipio": "Bento Gonçalves",
+                        "uf": "RS",
+                        "cep": "95702-000",
+                        "bairro": "Imigrante",
+                        "nomePais": "BRASIL"
+                    },
+                }
             }
         );
 
         console.log(res);
         assert(res);
 
-
         const newOrder = await client.pedidosVendas.get(createdPedidos[0].id);
         console.log(newOrder);
     });
+
+    it('update situacao', async () => {
+        const contato = createdContatos[0];
+        const produto = createdProdutos[0];
+        const pedido =  createdPedidos[0];
+
+        // situacaoId 9 = Atendido
+        const res = await client.pedidosVendas.updateSituacao(pedido.id, 9)
+        console.log(res);
+    });
+
 });

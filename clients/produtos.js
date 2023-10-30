@@ -8,6 +8,16 @@ class ProdutosClient extends BaseClient {
             situacao
         });
     }
+
+    async getAllWithStock() {
+        let allProducts = [];
+
+        for await (const products of this.getAll()) {
+            allProducts = allProducts.concat(products);
+        }
+
+        return allProducts;
+    }
 }
 
 module.exports = ProdutosClient;

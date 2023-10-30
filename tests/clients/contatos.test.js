@@ -19,7 +19,7 @@ describe('Bling! API Contatos Client', () => {
         assert(client);
     });
 
-    it.only('create', async () => {
+    it('create', async () => {
         const client = new ContatosClient(API_TOKEN);
         const res = await client.create({
             nome: `Test #${new Date().getTime()}`,
@@ -33,7 +33,7 @@ describe('Bling! API Contatos Client', () => {
         const client = new ContatosClient(API_TOKEN);
 
         try {
-            for await (const contatos of client.getAll({ criterio: 3 })) {
+            for await (const contatos of client.getAll({ criterio: 1 })) {
                 assert(contatos.length);
                 for (const c of contatos) {
                     console.log(c);

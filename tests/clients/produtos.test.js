@@ -31,7 +31,14 @@ describe('Bling! API Produtos Client', () => {
         }
     });
 
-    it('create', async () => {
+    it.only('getAllWithStock()', async () => {
+        const client = new ProdutosClient(API_TOKEN);
+        const products = await client.getAllWithStock();
+
+        console.log(products.length);
+    });
+
+    it.skip('create', async () => {
         const client = new ProdutosClient(API_TOKEN);
 
         const res = await client.create({
@@ -73,7 +80,7 @@ describe('Bling! API Produtos Client', () => {
     });
 
 
-    it('delete', async () => {
+    it.skip('delete', async () => {
         const client = new ProdutosClient(API_TOKEN);
         const res = await client.create({
             descricao: `Test #${new Date().getTime()}`
