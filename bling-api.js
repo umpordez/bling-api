@@ -1,5 +1,6 @@
 const V = require('argument-validator');
 
+const AuthClient = require('./clients/authentication');
 const BorderosClient = require('./clients/borderos');
 const CamposCustomizadosClient = require('./clients/campos-customizados');
 const CategoriasLojasClient = require('./clients/categorias-lojas');
@@ -106,4 +107,4 @@ class BlingApi {
     }
 }
 
-module.exports = BlingApi;
+module.exports = { BlingApi, AuthClient };

@@ -19,11 +19,10 @@ const configByEnv = {
 };
 
 class BlingBaseClient {
-    constructor(apiToken, env = 'prod') {
-        V.string(apiToken, 'apiToken');
+    constructor(token, env = 'prod') {
         V.string(env, 'env');
 
-        this.apiToken = apiToken;
+        this.token = token;
         this.baseUrl = configByEnv[env].baseUrl;
 
         this.lastRequests = [];
@@ -73,15 +72,16 @@ class BlingBaseClient {
         } while (data.length >= params.limit);
     }
 
-    async doRequest(method, url, body = {}) {
+    async doRequest(method, url, body = {}, headers = {}) {
         V.string(method, 'method');
         V.string(url, 'url');
 
         method = method.toUpperCase();
 
-        const headers = {
+        headers = {
+            'Authorization': this.token ? `Bearer ${this.token}` : null,
             'Accept': 'application/json',
-            'X-API-KEY': this.apiToken
+            ...headers
         };
 
         url = `${this.baseUrl}/${url}`;
@@ -116,6 +116,7 @@ class BlingBaseClient {
             this.lastResponse = { body: res.data, headers: res.headers };
             this.lastResponses.push(this.lastResponse);
         } catch (ex) {
+            console.log('error');
             ex.response = ex.response || ex.res;
             if (ex.response) {
                 const { response } = ex;
@@ -173,7 +174,7 @@ class BlingBaseClient {
             throw err;
         }
 
-        return response.data;
+        return response.data ? response.data : response;
     }
 
     async doGetRequest(url, params) {

@@ -2,26 +2,25 @@ require('../test-helper');
 
 const { format:formatDate } = require('date-fns');
 const assert = require('assert');
-const BlingApi = require('../../bling-api');
+const { BlingApi, AuthClient } = require('../../bling-api');
 
 describe('BlingApi', () => {
     const { API_TOKEN } = process.env;
     const createdProdutos = [];
-
-    after(async () => {
-        const client = new BlingApi(API_TOKEN);
-
-        for (const prod of createdProdutos) {
-            await client.produtos.situacoes(prod.id, 'E');
-            await client.produtos.delete(prod.id);
-        }
-    });
 
     it('initialize client', () => {
         const client = new BlingApi(API_TOKEN);
 
         assert(client);
         assert(client.apiToken);
+    });
+
+    it.only('test auth', async () => {
+        const auth = new AuthClient();
+        const res = await auth.getAuthorizationToken('foo');
+
+        console.log(res);
+        assert(res);
     });
 
     it('create product', async () => {
@@ -50,7 +49,7 @@ describe('BlingApi', () => {
         createdProdutos.push(produto);
     });
 
-    it.only('create order', async () => {
+    it('create order', async () => {
         const client = new BlingApi(API_TOKEN);
 
         const pedido = await client.pedidosCompras.create({
