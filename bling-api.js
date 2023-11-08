@@ -39,10 +39,14 @@ const UsuariosClient = require('./clients/usuarios');
 const VendedoresClient = require('./clients/vendedores');
 
 class BlingApi {
-    constructor(token) {
+    constructor(token, refreshToken) {
         V.string(token, 'token');
+        if (typeof refreshToken !== 'function') {
+            throw new Error('refreshToken is not a function')
+        }
 
         this.token = token;
+        this.refreshToken = refreshToken;
 
         this.lastRequests = [];
         this.lastResponses = [];
@@ -86,7 +90,7 @@ class BlingApi {
     }
 
     initClient(Client) {
-        const client = new Client(this.token);
+        const client = new Client(this.token, this.refreshToken);
         const self = this;
 
         const _doRequest = client.doRequest;

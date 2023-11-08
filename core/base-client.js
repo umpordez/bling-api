@@ -21,12 +21,19 @@ const configByEnv = {
 };
 
 class BlingBaseClient {
-    constructor(token, env = 'prod') {
+    constructor(token, refreshToken, env = 'prod') {
         V.string(env, 'env');
 
-        if (token) { V.string(token, 'token'); }
+        if (token) {
+            V.string(token, 'token');
+
+            if (typeof refreshToken !== 'function') {
+                throw new Error('refreshToken is not a function')
+            }
+        }
 
         this.token = token;
+        this.refreshToken = refreshToken;
 
         this.baseUrl = configByEnv[env].baseUrl;
 
@@ -157,6 +164,12 @@ class BlingBaseClient {
                                 `Element: ${f.element}, ` +
                                 `Msg: ${f.msg}`).join('\n')}`;
                         }
+                    }
+
+                    if (type === 'invalid_token') {
+                        this.token = await this.refreshToken();
+                        if (!this.token) throw errorObject;
+                        return this.doRequest.apply(this, arguments);
                     }
 
                     throw errorObject;

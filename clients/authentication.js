@@ -24,13 +24,13 @@ class AuthenticationClient extends BaseClient {
         return res;
     }
 
-    async refreshToken(refreshToken) {
-        V.string(refreshToken, 'refreshToken');
+    async getTokenByRefreshToken(token) {
+        V.string(token, 'token');
 
         const res = await this.doRequest(
             'POST',
             `${this.endpoint}/token`,
-            { grant_type: 'refresh_token', refresh_token: refreshToken },
+            { grant_type: 'refresh_token', refresh_token: token },
             { 'Authorization': `Basic ${this.token}` }
         );
 
