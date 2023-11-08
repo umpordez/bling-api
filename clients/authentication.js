@@ -11,7 +11,7 @@ class AuthenticationClient extends BaseClient {
 
     get endpoint() { return 'oauth'; }
 
-    async getAuthorizationToken(code) {
+    async getAccessToken(code) {
         V.string(code, 'code');
 
         const res = await this.doRequest(

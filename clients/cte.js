@@ -1,10 +1,7 @@
 const BaseClient = require('../core/base-client');
 
 class CteClient extends BaseClient {
-    constructor(apiToken) {
-        super(apiToken);
-        this.endpoint = 'cte';
-    }
+    get endpoint() { return 'cte'; }
 }
 
 module.exports = CteClient;

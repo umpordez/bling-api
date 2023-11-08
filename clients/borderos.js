@@ -1,10 +1,7 @@
 const BaseClient = require('../core/base-client');
 
 class BorderosClient extends BaseClient {
-    constructor(apiToken) {
-        super(apiToken);
-        this.endpoint = 'borderos';
-    }
+    get endpoint() { return 'borderos'; }
 }
 
 module.exports = BorderosClient;

@@ -2,6 +2,8 @@ const axios = require('axios');
 const V = require('argument-validator');
 const querystring = require('querystring');
 
+const AuthenticationClient = require('../clients/authentication');
+
 async function sleep(ms) {
     return new Promise((resolve) => {
         setTimeout(resolve, ms);
@@ -22,7 +24,10 @@ class BlingBaseClient {
     constructor(token, env = 'prod') {
         V.string(env, 'env');
 
+        if (token) { V.string(token, 'token'); }
+
         this.token = token;
+
         this.baseUrl = configByEnv[env].baseUrl;
 
         this.lastRequests = [];
@@ -116,7 +121,6 @@ class BlingBaseClient {
             this.lastResponse = { body: res.data, headers: res.headers };
             this.lastResponses.push(this.lastResponse);
         } catch (ex) {
-            console.log('error');
             ex.response = ex.response || ex.res;
             if (ex.response) {
                 const { response } = ex;
@@ -155,7 +159,6 @@ class BlingBaseClient {
                         }
                     }
 
-                    console.log(errorObject.message);
                     throw errorObject;
                 }
             }

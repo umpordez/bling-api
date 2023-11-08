@@ -41,7 +41,8 @@ const VendedoresClient = require('./clients/vendedores');
 class BlingApi {
     constructor(token) {
         V.string(token, 'token');
-        this.apiToken = token;
+
+        this.token = token;
 
         this.lastRequests = [];
         this.lastResponses = [];
@@ -85,7 +86,7 @@ class BlingApi {
     }
 
     initClient(Client) {
-        const client = new Client(this.apiToken);
+        const client = new Client(this.token);
         const self = this;
 
         const _doRequest = client.doRequest;
