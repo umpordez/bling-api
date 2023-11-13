@@ -2,8 +2,6 @@ const axios = require('axios');
 const V = require('argument-validator');
 const querystring = require('querystring');
 
-const AuthenticationClient = require('../clients/authentication');
-
 async function sleep(ms) {
     return new Promise((resolve) => {
         setTimeout(resolve, ms);
