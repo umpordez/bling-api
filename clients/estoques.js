@@ -8,18 +8,9 @@ class EstoquesClient extends BaseClient {
     }
 
     saldosAll(productsIds) {
-        let queryString = '';
-
-        for (let i = 0; i <= productsIds.length; i++) {
-            if (i < (productsIds.length - 1)) {
-                queryString += `idsProdutos%5B%5D=${productsIds[i]}&`;
-            }
-            else if (i === (productsIds.length - 1)) {
-                queryString += `idsProdutos%5B%5D=${productsIds[i]}`;
-            }
-        }
-
-        return this.doRequest('GET', `${this.endpoint}/saldos?${queryString}` );
+        return this.doRequest('GET', `${this.endpoint}/saldos`, {
+            'idsProdutos[]': productsIds
+        });
     }
 
 }

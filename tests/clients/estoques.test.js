@@ -32,7 +32,6 @@ describe('Bling! API Estoque Client', () => {
 
         for await (const products of clientProdutos.getAll()) {
             const produtosIds = products.map(p => p.id);
-            console.log(produtosIds);
             const estoques = await clientEstoques.saldosAll(produtosIds);
 
             assert(estoques.length)
