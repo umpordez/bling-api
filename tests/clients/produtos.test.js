@@ -4,23 +4,23 @@ const assert = require('assert');
 const ProdutosClient = require('../../clients/produtos');
 
 describe('Bling! API Produtos Client', () => {
-    const { API_TOKEN } = process.env;
+    const { TOKEN } = process.env;
     const createdProdutos = [];
 
     after(async () => {
-        const client = new ProdutosClient(API_TOKEN);
+        const client = new ProdutosClient(TOKEN);
         for (const prod of createdProdutos) {
             await client.delete(prod.id);
         }
     });
 
     it('initialize client', () => {
-        const client = new ProdutosClient(API_TOKEN);
+        const client = new ProdutosClient(TOKEN);
         assert(client);
     });
 
     it('getAll()', async () => {
-        const client = new ProdutosClient(API_TOKEN);
+        const client = new ProdutosClient(TOKEN);
 
         for await (const products of client.getAll()) {
             assert(products.length);
@@ -32,14 +32,15 @@ describe('Bling! API Produtos Client', () => {
     });
 
     it.only('getAllWithStock()', async () => {
-        const client = new ProdutosClient(API_TOKEN);
+        const client = new ProdutosClient(TOKEN);
         const products = await client.getAllWithStock();
 
+        console.log(products);
         console.log(products.length);
     });
 
     it.skip('create', async () => {
-        const client = new ProdutosClient(API_TOKEN);
+        const client = new ProdutosClient(TOKEN);
 
         const res = await client.create({
             nome: `Test #${new Date().getTime()}`,
@@ -53,7 +54,7 @@ describe('Bling! API Produtos Client', () => {
     });
 
     it('getById', async () => {
-        const client = new ProdutosClient(API_TOKEN);
+        const client = new ProdutosClient(TOKEN);
         const res = await client.create({
             descricao: `Test #${new Date().getTime()}`
         });
@@ -65,7 +66,7 @@ describe('Bling! API Produtos Client', () => {
     });
 
     it('update', async () => {
-        const client = new ProdutosClient(API_TOKEN);
+        const client = new ProdutosClient(TOKEN);
         const res = await client.create({
             descricao: `Test #${new Date().getTime()}`
         });
@@ -81,7 +82,7 @@ describe('Bling! API Produtos Client', () => {
 
 
     it.skip('delete', async () => {
-        const client = new ProdutosClient(API_TOKEN);
+        const client = new ProdutosClient(TOKEN);
         const res = await client.create({
             descricao: `Test #${new Date().getTime()}`
         });

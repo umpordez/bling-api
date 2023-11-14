@@ -14,11 +14,19 @@ class ProdutosClient extends BaseClient {
         let allProducts = [];
 
         for await (const products of this.getAll()) {
-            const productsIds = products.map(p => p.id);
-            const clientEstoques = new EstoquesClient(this.apiToken);
+            let productsMap = {};
+            for (const p of products) { productsMap[p.id] = p; }
 
-            const estoques = await clientEstoques.saldos(productsIds);
-            allProducts = allProducts.concat(products);
+            const productsIds = Object.keys(productsMap);
+            const clientEstoques = new EstoquesClient(this.token);
+
+            const estoques = await clientEstoques.saldosAll(productsIds);
+
+            for (const estoque of estoques) {
+                productsMap[estoque.produto.id].estoque = estoque;
+            }
+
+            allProducts = allProducts.concat(Object.values(productsMap));
         }
 
         return allProducts;
