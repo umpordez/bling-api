@@ -26,7 +26,7 @@ class ProdutosClient extends BaseClient {
                 productsMap[estoque.produto.id].estoque = estoque;
             }
 
-            allProducts = allProducts.concat(Object.values(productsMap));
+            allProducts = allProducts.concat(products);
         }
 
         return allProducts;
