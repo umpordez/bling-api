@@ -33,7 +33,7 @@ describe('Bling! API Produtos Client', () => {
 
     it.only('getAllWithStock()', async () => {
         const client = new ProdutosClient(TOKEN);
-        const products = await client.getAllWithStock();
+        const products = await client.getAllWithStock({ criterio: 5 });
 
         console.log(products);
         console.log(products.length);

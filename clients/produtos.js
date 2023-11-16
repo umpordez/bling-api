@@ -10,10 +10,10 @@ class ProdutosClient extends BaseClient {
         });
     }
 
-    async getAllWithStock() {
+    async getAllWithStock(opts = {}) {
         let allProducts = [];
 
-        for await (const products of this.getAll()) {
+        for await (const products of this.getAll(opts)) {
             let productsMap = {};
             for (const p of products) { productsMap[p.id] = p; }
 
