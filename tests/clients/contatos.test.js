@@ -4,23 +4,23 @@ const assert = require('assert');
 const ContatosClient = require('../../clients/contatos');
 
 describe('Bling! API Contatos Client', () => {
-    const { API_TOKEN } = process.env;
+    const { TOKEN } = process.env;
     const createdContatos = [];
 
     after(async () => {
-        const client = new ContatosClient(API_TOKEN);
+        const client = new ContatosClient(TOKEN);
         for (const cat of createdContatos) {
             await client.delete(cat.id);
         }
     });
 
     it('initialize client', () => {
-        const client = new ContatosClient(API_TOKEN);
+        const client = new ContatosClient(TOKEN);
         assert(client);
     });
 
     it('create', async () => {
-        const client = new ContatosClient(API_TOKEN);
+        const client = new ContatosClient(TOKEN);
         const res = await client.create({
             nome: `Test #${new Date().getTime()}`,
             tipo: 'F'
@@ -30,15 +30,15 @@ describe('Bling! API Contatos Client', () => {
     });
 
     it.only('getAll()', async () => {
-        const client = new ContatosClient(API_TOKEN);
+        const client = new ContatosClient(TOKEN);
 
         try {
+            let allContacts = [];
             for await (const contatos of client.getAll({ criterio: 1 })) {
-                assert(contatos.length);
-                for (const c of contatos) {
-                    console.log(c);
-                }
+                allContacts = allContacts.concat(contatos);
             }
+            console.log(allContacts.length);
+            assert(allContacts.length);
         } catch (ex) {
             console.error(ex);
             console.log(client.lastRequest);
