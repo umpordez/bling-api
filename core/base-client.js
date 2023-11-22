@@ -59,7 +59,7 @@ class BlingBaseClient {
         let page = 1;
         let data;
 
-        params.limite = params.limit || 100;
+        params.limite = params.limite || 100;
 
         do {
             data = await this.doRequest('GET', url, {
@@ -72,7 +72,7 @@ class BlingBaseClient {
 
             // let it breathe
             await sleep(1);
-        } while (data.length >= params.limit);
+        } while (data.length >= params.limite);
     }
 
     async doRequest(method, url, body = {}, headers = {}) {
