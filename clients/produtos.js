@@ -24,7 +24,7 @@ class ProdutosClient extends BaseClient {
             for (const p of products) {
                 const data = await this.getById(p.id);
                 productsMap[p.id] = data;
-                await sleep(1000);
+                await sleep(1200);
             }
 
             const productsIds = Object.keys(productsMap);
