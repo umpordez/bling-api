@@ -1,6 +1,12 @@
 const BaseClient = require('../core/base-client');
 const EstoquesClient = require('./estoques');
 
+async function sleep(ms) {
+    return new Promise((resolve) => {
+        setTimeout(resolve, ms);
+    });
+}
+
 class ProdutosClient extends BaseClient {
     get endpoint() { return 'produtos'; }
 
@@ -15,7 +21,11 @@ class ProdutosClient extends BaseClient {
 
         for await (const products of this.getAll(opts)) {
             let productsMap = {};
-            for (const p of products) { productsMap[p.id] = p; }
+            for (const p of products) {
+                const data = await this.getById(p.id);
+                productsMap[p.id] = data;
+                await sleep(1000);
+            }
 
             const productsIds = Object.keys(productsMap);
             const clientEstoques = new EstoquesClient(this.token);
@@ -26,7 +36,7 @@ class ProdutosClient extends BaseClient {
                 productsMap[estoque.produto.id].estoque = estoque;
             }
 
-            allProducts = allProducts.concat(products);
+            allProducts = allProducts.concat(Object.values(productsMap));
         }
 
         return allProducts;

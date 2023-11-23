@@ -36,7 +36,7 @@ describe('Bling! API Produtos Client', () => {
         let products = await client.getAllWithStock({ criterio: 5 });
         const productsDeleted = await client.getAllWithStock({ criterio: 4 });
 
-        products = products.concat(productsDeleted)
+        products = products.concat(productsDeleted);
 
         console.log(products);
         console.log(products.length);

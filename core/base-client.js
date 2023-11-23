@@ -119,6 +119,7 @@ class BlingBaseClient {
             this.lastResponse = { body: res.data, headers: res.headers };
             this.lastResponses.push(this.lastResponse);
         } catch (ex) {
+
             ex.response = ex.response || ex.res;
             if (ex.response) {
                 const { response } = ex;

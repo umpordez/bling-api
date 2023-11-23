@@ -19,17 +19,27 @@ describe('Bling! API Contatos Client', () => {
         assert(client);
     });
 
-    it('create', async () => {
+    it.only('create', async () => {
         const client = new ContatosClient(TOKEN);
         const res = await client.create({
             nome: `Test #${new Date().getTime()}`,
             tipo: 'F'
         });
 
+        console.log(res);
         createdContatos.push(res);
     });
 
-    it.only('getAll()', async () => {
+    it.only('update', async () => {
+        const client = new ContatosClient(TOKEN);
+        const res = await client.update(createdContatos[0].id, {
+            nome: `Test #${new Date().getTime()}`,
+            tipo: 'F'
+        });
+        console.log(res);
+    });
+
+    it('getAll()', async () => {
         const client = new ContatosClient(TOKEN);
 
         try {
